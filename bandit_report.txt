@@ -1,0 +1,66 @@
+Run started:2026-04-17 05:26:38.204126+00:00
+
+Test results:
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./app.py:144:18
+143	        c = conn.cursor()
+144	        query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
+145	        c.execute(query)
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./app.py:172:18
+171	    c = conn.cursor()
+172	    sql_query = f"SELECT * FROM students WHERE name LIKE '%{query}%'"
+173	    
+
+--------------------------------------------------
+>> Issue: [B201:flask_debug_true] A Flask app appears to be run with debug=True, which exposes the Werkzeug debugger and allows the execution of arbitrary code.
+   Severity: High   Confidence: Medium
+   CWE: CWE-94 (https://cwe.mitre.org/data/definitions/94.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b201_flask_debug_true.html
+   Location: ./app.py:256:4
+255	    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+256	    app.run(debug=True, host='0.0.0.0', port=5000)
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./app.py:256:29
+255	    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+256	    app.run(debug=True, host='0.0.0.0', port=5000)
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 204
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 0
+		Medium: 3
+		High: 1
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 2
+		Medium: 2
+		High: 0
+Files skipped (0):
+
+
+
+While SAST tools like Bandit are great for finding syntax-based flaws (like SQLi), 
+they are blind to Business Logic Flaws. Bandit will not flag your insecure cookie 
+setup (Privilege Escalation) or the lack of authentication on your API endpoint. 
+As a Risk Manager, this proves why manual review and Dynamic Application Security Testing (DAST) are necessary alongside automated scanners.
